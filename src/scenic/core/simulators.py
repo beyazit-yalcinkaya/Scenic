@@ -386,6 +386,7 @@ class Simulation(abc.ABC):
                 terminationType,
                 terminationReason,
                 self.records,
+                tuple(obj._dynamicProxy for obj in self.objects),
             )
             self.result = result
         except (RejectSimulationException, RejectionException, GuardViolation) as e:
@@ -883,7 +884,7 @@ class SimulationResult:
             values its expression took during the simulation.
     """
 
-    def __init__(self, trajectory, actions, terminationType, terminationReason, records):
+    def __init__(self, trajectory, actions, terminationType, terminationReason, records, last_state=None):
         self.trajectory = tuple(trajectory)
         assert self.trajectory
         self.finalState = self.trajectory[-1]
@@ -891,3 +892,4 @@ class SimulationResult:
         self.terminationType = terminationType
         self.terminationReason = str(terminationReason)
         self.records = dict(records)
+        self.last_state = last_state
