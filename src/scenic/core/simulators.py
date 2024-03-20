@@ -386,7 +386,7 @@ class Simulation(abc.ABC):
                 terminationType,
                 terminationReason,
                 self.records,
-                tuple(obj._dynamicProxy for obj in self.objects),
+                tuple((tuple(obj._dynamicProxy for obj in self.objects), self.scene.behaviorNamespaces, self.scene.params)),
             )
             self.result = result
         except (RejectSimulationException, RejectionException, GuardViolation) as e:
